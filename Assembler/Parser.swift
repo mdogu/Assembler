@@ -19,6 +19,10 @@ class Parser {
         let fileURL = currentFolder.appendingPathComponent(inputFile)
         contents = try String(contentsOf: fileURL)
         lines = contents.components(separatedBy: .newlines)
+        
+        
+        let file = try FileHandle.init(forReadingFrom: fileURL)
+        file.read
     }
     
     func getLabels() {
