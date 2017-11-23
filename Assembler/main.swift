@@ -8,26 +8,17 @@
 
 import Foundation
 
-guard CommandLine.argc == 2 else {
+guard CommandLine.argc == 2, CommandLine.arguments[1].ends(with: ".asm") else {
     Console.error("Usage: Assembler filename.asm")
     exit(0)
 }
 
+let parser: Parser
 do {
-    let parser = try Parser(inputFile: CommandLine.arguments[1])
+    parser = try Parser(inputFile: CommandLine.arguments[1])
 } catch {
-    print(error)
+    print(error.localizedDescription)
+    exit(0)
 }
-
-
-//let fileName = CommandLine.arguments[1].replacingOccurrences(of: ".asm", with: "")
-//let currentFolder = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-//let fileURL = currentFolder.appendingPathComponent(fileName).appendingPathExtension("hack")
-//
-//do {
-//    try "Test".write(to: fileURL, atomically: true, encoding: .utf8)
-//    Console.print("Binary file is created successfully.")
-//} catch {
-//    print(error)
-//}
+parser.execute()
 
