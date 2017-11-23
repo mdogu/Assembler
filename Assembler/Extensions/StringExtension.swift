@@ -17,4 +17,10 @@ extension String {
         return end == suffix
     }
     
+    func trimmingFirstCharacter() -> String? {
+        guard self.count > 1 else { return nil }
+        let index = self.index(after: startIndex)
+        return String(self[index...])
+    }
+    
 }

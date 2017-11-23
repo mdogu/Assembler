@@ -10,7 +10,7 @@ import Foundation
 
 class Parser {
     
-    var instructions: [Command]?
+    var instructions = [Instruction]()
     
     let inputFile: FileHandle
     let outputFile: FileHandle
@@ -35,10 +35,30 @@ class Parser {
             guard trimmed.count > 0, trimmed.starts(with: "//") == false else { continue }
             
             if trimmed.starts(with: "@") {
+                guard let value = trimmed.trimmingFirstCharacter() else { continue }
+                let instruction: Instruction = .typeA(address: value)
                 outputFile.write(instruction: "A-instruction")
             } else if trimmed.contains("=") || trimmed.contains(";") {
+                let set = CharacterSet(charactersIn: "=;")
+                let parts = trimmed.components(separatedBy: set)
+                let instruction: Instruction
+                if trimmed.contains("=") && trimmed.contains(";") {
+                    guard parts.count == 3 else { continue }
+                    instruction = .typeC(dest: parts[0], comp: parts[1], jump: parts[2])
+                } else if trimmed.contains("=") {
+                    guard parts.count == 2 else { continue }
+                    instruction = .typeC(dest: parts[0], comp: parts[1], jump: nil)
+                } else if trimmed.contains(";") {
+                    guard parts.count == 2 else { continue }
+                    instruction = .typeC(dest: nil, comp: parts[0], jump: parts[1])
+                } else {
+                    continue
+                }
+                instructions.append(instruction)
                 outputFile.write(instruction: "C-instruction")
-            } else if trimmed.starts(with: "("){
+            } else if trimmed.starts(with: "(") && trimmed.ends(with: ")") {
+                let parantheses = CharacterSet(charactersIn: "()")
+                let label = trimmed.trimmingCharacters(in: parantheses)
                 outputFile.write(instruction: "Label")
             }
         }
@@ -52,9 +72,8 @@ class Parser {
     
 }
 
-enum Command {
+enum Instruction {
     case typeA(address: String)
     case typeC(dest: String?, comp: String, jump: String?)
-    case label(String)
 }
 
