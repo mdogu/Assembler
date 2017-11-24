@@ -17,7 +17,7 @@ let parser: Parser
 do {
     parser = try Parser(inputFile: CommandLine.arguments[1])
 } catch {
-    print(error.localizedDescription)
+    Console.error(error.localizedDescription)
     exit(0)
 }
 parser.execute()

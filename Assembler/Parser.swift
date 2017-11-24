@@ -30,15 +30,23 @@ class Parser {
     }
     
     func execute() {
+        firstPass()
+        secondPass()
+        closeFiles()
+    }
+    
+    func firstPass() {
         while let line = inputFile.readLine() {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             guard trimmed.count > 0, trimmed.starts(with: "//") == false else { continue }
             
             if trimmed.starts(with: "@") {
+                // A-instruction
                 guard let value = trimmed.trimmingFirstCharacter() else { continue }
                 let instruction: Instruction = .typeA(address: value)
-                outputFile.write(instruction: "A-instruction")
+                instructions.append(instruction)
             } else if trimmed.contains("=") || trimmed.contains(";") {
+                // C-instruction
                 let set = CharacterSet(charactersIn: "=;")
                 let parts = trimmed.components(separatedBy: set)
                 let instruction: Instruction
@@ -55,19 +63,46 @@ class Parser {
                     continue
                 }
                 instructions.append(instruction)
-                outputFile.write(instruction: "C-instruction")
             } else if trimmed.starts(with: "(") && trimmed.ends(with: ")") {
+                // Label
                 let parantheses = CharacterSet(charactersIn: "()")
                 let label = trimmed.trimmingCharacters(in: parantheses)
-                outputFile.write(instruction: "Label")
+                guard label.count > 0 else { continue }
+                Symbol.table[label] = instructions.count
             }
         }
-        inputFile.closeFile()
-        outputFile.closeFile()
     }
     
-    func getLabels() {
-        
+    func secondPass() {
+        for instruction in instructions {
+            switch instruction {
+            case .typeA(address: let value):
+                let location: Int
+                if let address = Int(value), address > 0 {
+                    location = address
+                } else {
+                    if let address = Symbol.table[value] {
+                        location = address
+                    } else {
+                        location = Symbol.nextAvailableRAMLocation
+                        Symbol.table[value] = Symbol.nextAvailableRAMLocation
+                        Symbol.nextAvailableRAMLocation += 1
+                    }
+                }
+                let binary = String(location, radix: 2, length: 15)
+                outputFile.write(line: "0" + binary)
+            case .typeC(dest: let dest, comp: let comp, jump: let jump):
+                let destBinary = Code.dest(input: dest)
+                let compBinary = Code.comp(input: comp)
+                let jumpBinary = Code.jump(input: jump)
+                outputFile.write(line: "111" + compBinary + destBinary + jumpBinary)
+            }
+        }
+    }
+    
+    func closeFiles() {
+        inputFile.closeFile()
+        outputFile.closeFile()
     }
     
 }

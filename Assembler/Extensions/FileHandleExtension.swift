@@ -50,8 +50,8 @@ extension FileHandle {
         return line?.trimmingCharacters(in: CharacterSet(charactersIn: "\r"))
     }
     
-    func write(instruction: String) {
-        let data = (instruction + "\n").data(using: .ascii)!
+    func write(line: String) {
+        let data = (line + "\n").data(using: .ascii)!
         write(data)
     }
     

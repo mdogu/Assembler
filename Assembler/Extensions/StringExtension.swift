@@ -23,4 +23,15 @@ extension String {
         return String(self[index...])
     }
     
+    init(_ value: Int, radix: Int, length: Int) {
+        let binary = String(value, radix: radix)
+        if binary.count <= length {
+            let padding = String(repeating: "0", count: length - binary.count)
+            self.init(padding + binary)
+        } else {
+            let index = binary.index(binary.endIndex, offsetBy: -length)
+            self.init(binary[index...])
+        }
+    }
+    
 }

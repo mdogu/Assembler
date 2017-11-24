@@ -10,7 +10,7 @@
 		5A5265AD1FA515FD007B1503 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5265AC1FA515FD007B1503 /* main.swift */; };
 		5A5265B41FA52A6D007B1503 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5265B31FA52A6D007B1503 /* Parser.swift */; };
 		5A5265B61FA52A81007B1503 /* Code.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5265B51FA52A81007B1503 /* Code.swift */; };
-		5A5265B81FA52A93007B1503 /* SymbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5265B71FA52A93007B1503 /* SymbolTable.swift */; };
+		5A5265B81FA52A93007B1503 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5265B71FA52A93007B1503 /* Symbol.swift */; };
 		5A5265BC1FA52CE1007B1503 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5265BB1FA52CE1007B1503 /* Console.swift */; };
 		5A7C4D311FC7663000BB642B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7C4D301FC7663000BB642B /* StringExtension.swift */; };
 		5AE7F7691FC5B6A80035D91F /* FileHandleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE7F7681FC5B6A80035D91F /* FileHandleExtension.swift */; };
@@ -33,7 +33,7 @@
 		5A5265AC1FA515FD007B1503 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5A5265B31FA52A6D007B1503 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		5A5265B51FA52A81007B1503 /* Code.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Code.swift; sourceTree = "<group>"; };
-		5A5265B71FA52A93007B1503 /* SymbolTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolTable.swift; sourceTree = "<group>"; };
+		5A5265B71FA52A93007B1503 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
 		5A5265BB1FA52CE1007B1503 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		5A7C4D301FC7663000BB642B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		5AE7F7681FC5B6A80035D91F /* FileHandleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileHandleExtension.swift; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 				5A5265BB1FA52CE1007B1503 /* Console.swift */,
 				5A5265B31FA52A6D007B1503 /* Parser.swift */,
 				5A5265B51FA52A81007B1503 /* Code.swift */,
-				5A5265B71FA52A93007B1503 /* SymbolTable.swift */,
+				5A5265B71FA52A93007B1503 /* Symbol.swift */,
 				5A7C4D331FC7697A00BB642B /* Extensions */,
 			);
 			path = Assembler;
@@ -151,7 +151,7 @@
 				5A5265BC1FA52CE1007B1503 /* Console.swift in Sources */,
 				5A5265B61FA52A81007B1503 /* Code.swift in Sources */,
 				5AE7F7691FC5B6A80035D91F /* FileHandleExtension.swift in Sources */,
-				5A5265B81FA52A93007B1503 /* SymbolTable.swift in Sources */,
+				5A5265B81FA52A93007B1503 /* Symbol.swift in Sources */,
 				5A5265AD1FA515FD007B1503 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
