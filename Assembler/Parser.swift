@@ -21,7 +21,7 @@ class Parser {
             inputURL = URL(fileURLWithPath: inputFilePath)
         } else {
             let currentFolder = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-            inputURL = URL.init(fileURLWithPath: inputFilePath, relativeTo: currentFolder)
+            inputURL = URL(fileURLWithPath: inputFilePath, relativeTo: currentFolder)
         }
         let inputFileName = inputURL.lastPathComponent
         let workingFolder = inputURL.deletingLastPathComponent()
