@@ -15,7 +15,7 @@ guard CommandLine.argc == 2, CommandLine.arguments[1].ends(with: ".asm") else {
 
 let parser: Parser
 do {
-    parser = try Parser(inputFile: CommandLine.arguments[1])
+    parser = try Parser(inputFilePath: CommandLine.arguments[1])
 } catch {
     Console.error(error.localizedDescription)
     exit(0)

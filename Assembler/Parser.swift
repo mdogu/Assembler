@@ -15,11 +15,18 @@ class Parser {
     let inputFile: FileHandle
     let outputFile: FileHandle
     
-    init(inputFile: String) throws {
-        let currentFolder = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-        let inputURL = currentFolder.appendingPathComponent(inputFile)
-        let outputFile = inputFile.replacingOccurrences(of: ".asm", with: ".hack")
-        let outputURL = currentFolder.appendingPathComponent(outputFile)
+    init(inputFilePath: String) throws {
+        let inputURL: URL
+        if FileManager.default.fileExists(atPath: inputFilePath) {
+            inputURL = URL(fileURLWithPath: inputFilePath)
+        } else {
+            let currentFolder = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+            inputURL = URL.init(fileURLWithPath: inputFilePath, relativeTo: currentFolder)
+        }
+        let inputFileName = inputURL.lastPathComponent
+        let workingFolder = inputURL.deletingLastPathComponent()
+        let outputFileName = inputFileName.replacingOccurrences(of: ".asm", with: ".hack")
+        let outputURL = workingFolder.appendingPathComponent(outputFileName)
         
         self.inputFile = try FileHandle(forReadingFrom: inputURL)
         
@@ -37,7 +44,11 @@ class Parser {
     
     func firstPass() {
         while let line = inputFile.readLine() {
-            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            var commentLess = line
+            if let range = line.range(of: "//") {
+                commentLess.removeSubrange(range.lowerBound...)
+            }
+            let trimmed = commentLess.trimmingCharacters(in: .whitespaces)
             guard trimmed.count > 0, trimmed.starts(with: "//") == false else { continue }
             
             if trimmed.starts(with: "@") {
@@ -78,7 +89,7 @@ class Parser {
             switch instruction {
             case .typeA(address: let value):
                 let location: Int
-                if let address = Int(value), address > 0 {
+                if let address = Int(value), address >= 0 {
                     location = address
                 } else {
                     if let address = Symbol.table[value] {
